@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "files": ["dist/main.js"],
+	"types": "src/main.ts",
   "dependencies": {
     "@google-cloud/firestore": "^6.4.0",
     "nodemon": "^2.0.15",
