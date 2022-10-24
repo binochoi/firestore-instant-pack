@@ -1,10 +1,9 @@
 {
   "name": "firestore-instant-pkg",
   "description": "for instant development with firestore.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/main.js",
   "license": "MIT",
-  "files": ["dist/main.js"],
 	"types": "src/main.ts",
   "dependencies": {
     "@google-cloud/firestore": "^6.4.0",
