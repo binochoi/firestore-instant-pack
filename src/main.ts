@@ -11,7 +11,7 @@ type WhereFilterOperator =
   | 'in'
   | 'not-in'
   | 'array-contains-any';
-type Object = {[K: string]: unknown};
+type Object = {[K: string]: any};
 let store: Firestore;
 export const config = (settings: ConstructorParameters<typeof Firestore>[0]) => {
   store = new Firestore(settings);
