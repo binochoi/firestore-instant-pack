@@ -51,7 +51,7 @@ export const getPage = async (
   }
   const documents = await query.get();
 
-  const returnArray: Object[] = [];
+  const returnArray: any[] = [];
   documents.forEach((doc) =>
     returnArray.push({
       documentId: doc.id,
@@ -66,7 +66,7 @@ export const getSpecifics = async (collectionName: string, _docs: string[] | str
   const likeListPageLimit = 25;
   const collection = store.collection(collectionName);
 
-  const returnArray: Object[] = [];
+  const returnArray: any[] = [];
   const limit =
     docs.length > likeListPageLimit ? likeListPageLimit : docs.length;
   for (let i = 0; i < limit; i++) {
