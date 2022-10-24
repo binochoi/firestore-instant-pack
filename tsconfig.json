@@ -1,0 +1,22 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "removeComments": true,
+        "lib": ["ESNext"],
+        "module": "commonjs",
+        "target": "ESNext",
+        "jsx": "preserve",
+        "types": ["node"],
+        "strict": true,
+        "strictNullChecks": true,
+        "skipLibCheck": true,
+        "typeRoots": ["./node_modules/@types/", "./@types/global.d.ts"],
+        "rootDir": "./src/",
+        "outDir": "./dist",
+    },
+    "files": ["./src/main.ts"],
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}

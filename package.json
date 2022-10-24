@@ -1,0 +1,22 @@
+{
+  "name": "firestore-instant-pkg",
+  "description": "for instant development with firestore.",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "files": ["dist/main.js"],
+  "dependencies": {
+    "@google-cloud/firestore": "^6.4.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "keywords": [
+    "firestore",
+    "firebase",
+    "nosql"
+  ]
+}
