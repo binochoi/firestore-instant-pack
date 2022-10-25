@@ -86,18 +86,21 @@ export const getSpecifics = async (collectionName: string, _docs: string[] | str
   return returnArray;
 }
 
+export const getOne = async (collectionName: string, conditions?: [string, WhereFilterOperator, string][]) => {
+  const collection = store.collection(collectionName);
+  conditions?.map((condition) => {
+    collection.where(...condition);
+  })
+  const document = await collection.get();
+  return document;
+}
+
 export const isExistDoc = async (
   collectionName: string,
-  parameter: [string, WhereFilterOperator, string],
+  conditions?: [string, WhereFilterOperator, string][],
 ): Promise<boolean> => {
-  const property = parameter[0];
-  const operator = parameter[1];
-  const value = parameter[2];
-
-  const collection = store.collection(collectionName);
-  const query = collection.where(property, operator, value);
-    const document = await query.get();
-    return !document.empty;
+  const document = await getOne(collectionName, conditions);
+  return !document.empty;
 }
 
 export const insertOne = async (collection: string, obj: Object): Promise<string> => {
