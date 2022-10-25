@@ -100,7 +100,7 @@ export const isExistDoc = async (
     return !document.empty;
 }
 
-export const insertOne = async (collection: string, obj: {  }): Promise<string> => {
+export const insertOne = async (collection: string, obj: Object): Promise<string> => {
   const batch = store.batch();
   const doc = modifyUndefToNullOfProperties(obj);
   const req = await store.collection(collection).add(doc);
