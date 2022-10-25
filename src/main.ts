@@ -13,6 +13,7 @@ type WhereFilterOperator =
   | 'array-contains-any';
 type Object = {[K: string]: any};
 let store: Firestore;
+export const getFirestoreInstance = () => store;
 export const config = (settings: ConstructorParameters<typeof Firestore>[0]) => {
   store = new Firestore(settings);
   return store;
