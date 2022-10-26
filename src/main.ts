@@ -11,7 +11,14 @@ type WhereFilterOperator =
   | 'in'
   | 'not-in'
   | 'array-contains-any';
+type WhereCondition = [string, WhereFilterOperator, string];
 type Object = {[K: string]: any};
+const transformSingularWhereConditionToPlural = (conditions: WhereCondition | WhereCondition[]): WhereCondition[] => {
+  if(typeof conditions[0] === 'string') {
+    return [conditions] as WhereCondition[];
+  }
+  return conditions as WhereCondition[];
+};
 let store: Firestore;
 export const getFirestoreInstance = () => store;
 export const config = (settings: ConstructorParameters<typeof Firestore>[0]) => {
@@ -86,21 +93,27 @@ export const getSpecifics = async (collectionName: string, _docs: string[] | str
   return returnArray;
 }
 
-export const getOne = async (collectionName: string, conditions?: [string, WhereFilterOperator, string][]) => {
+const getDocument = async (collectionName: string, _conditions?: WhereCondition | WhereCondition[]) => {
+  const conditions = _conditions && transformSingularWhereConditionToPlural(_conditions);
   const collection = store.collection(collectionName);
   conditions?.map((condition) => {
     collection.where(...condition);
   })
-  const document = await collection.get();
-  return document;
+  const { docs } = await collection.get();
+  return docs[0];
+}
+export const getOne = async (collectionName: string, conditions?: WhereCondition | WhereCondition[]): Promise<any> => {
+  const docs = await getDocument(collectionName, conditions);
+  const documentId = docs.id;
+  return { documentId, ...docs.data() }
 }
 
 export const isExistDoc = async (
   collectionName: string,
-  conditions?: [string, WhereFilterOperator, string][],
+  conditions?: WhereCondition | WhereCondition[],
 ): Promise<boolean> => {
-  const document = await getOne(collectionName, conditions);
-  return !document.empty;
+  const { exists } = await getDocument(collectionName, conditions);
+  return exists;
 }
 
 export const insertOne = async (collection: string, obj: Object): Promise<string> => {
