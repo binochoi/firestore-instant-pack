@@ -51,7 +51,7 @@ export const getPage = async (
   const { pageIndex, count } = options;
   const offset = (pageIndex - 1) * count;
   const collection = store.collection(collectionName);
-  let query = await collection.offset(offset).limit(count);
+  let query = collection.offset(offset).limit(count);
   if (options.where) {
     query = query.where(...options.where);
   } else {
