@@ -12,7 +12,8 @@
     "typescript": "^4.6.2"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc --project tsconfig.json",
+    "publish": "yarn build && npm publish"
   },
   "keywords": [
     "firestore",
