@@ -96,14 +96,21 @@ export const getSpecifics = async (collectionName: string, _docs: string[] | str
 const getDocument = async (collectionName: string, _conditions?: WhereCondition | WhereCondition[]) => {
   const conditions = _conditions && transformSingularWhereConditionToPlural(_conditions);
   const collection = store.collection(collectionName);
+  let query: ReturnType<typeof collection.where> | undefined;
   conditions?.map((condition) => {
-    collection.where(...condition);
+    query = (query || collection).where(...condition);
   })
-  const { docs } = await collection.get();
+  const { docs } = await (query || collection).get();
+  if(docs.length === 0) {
+    return null;
+  }
   return docs[0];
 }
 export const getOne = async (collectionName: string, conditions?: WhereCondition | WhereCondition[]): Promise<any> => {
   const docs = await getDocument(collectionName, conditions);
+  if(docs === null) {
+    return null;
+  }
   const documentId = docs.id;
   return { documentId, ...docs.data() }
 }
@@ -112,8 +119,11 @@ export const isExistDoc = async (
   collectionName: string,
   conditions?: WhereCondition | WhereCondition[],
 ): Promise<boolean> => {
-  const { exists } = await getDocument(collectionName, conditions);
-  return exists;
+  const docs = await getDocument(collectionName, conditions);
+  if(docs === null) {
+    return false;
+  }
+  return docs.exists;
 }
 
 export const insertOne = async (collection: string, obj: Object): Promise<string> => {
