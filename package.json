@@ -1,7 +1,7 @@
 {
   "name": "firestore-instant-pkg",
   "description": "for instant development with firestore.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "dist/main.js",
   "license": "MIT",
 	"types": "src/main.ts",
