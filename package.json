@@ -1,7 +1,7 @@
 {
   "name": "firestore-instant-pack",
   "description": "for instant development with firestore.",
-  "version": "0.1.0",
+  "version": "0.3.4",
   "main": "dist/main.js",
   "license": "MIT",
   "types": "src/main.ts",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "publish": "yarn build && npm publish"
+    "publish": "yarn build && npm publish --access public"
   },
   "keywords": [
     "firestore",
