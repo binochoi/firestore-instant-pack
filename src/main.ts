@@ -38,7 +38,7 @@ const modifyUndefToNullOfProperties = (_obj: Object) => {
 }
 
 const defaultPageCount = 25;
-export const getPage = async (
+export const getPage = async <T>(
   collectionName: string,
   options: {
     pageIndex: number;
@@ -59,22 +59,22 @@ export const getPage = async (
   }
   const documents = await query.get();
 
-  const returnArray: any[] = [];
+  const returnArray: Object = [];
   documents.forEach((doc) =>
     returnArray.push({
       documentId: doc.id,
       ...doc.data(),
     }),
   );
-  return returnArray;
+  return returnArray as T;
 }
 /** select just specific documents */
-export const getSpecifics = async (collectionName: string, _docs: string[] | string = []) => {
+export const getSpecifics = async <T>(collectionName: string, _docs: string[] | string = []) => {
   const docs = Array.isArray(_docs) ? _docs : [_docs];
   const likeListPageLimit = 25;
   const collection = store.collection(collectionName);
 
-  const returnArray: any[] = [];
+  const returnArray: Object = [];
   const limit =
     docs.length > likeListPageLimit ? likeListPageLimit : docs.length;
   for (let i = 0; i < limit; i++) {
@@ -90,7 +90,7 @@ export const getSpecifics = async (collectionName: string, _docs: string[] | str
       });
     }
   }
-  return returnArray;
+  return returnArray as T;
 }
 
 const getDocument = async (collectionName: string, _conditions?: WhereCondition | WhereCondition[]) => {
@@ -106,13 +106,13 @@ const getDocument = async (collectionName: string, _conditions?: WhereCondition 
   }
   return docs[0];
 }
-export const getOne = async (collectionName: string, conditions?: WhereCondition | WhereCondition[]): Promise<any> => {
+export const getOne = async <T>(collectionName: string, conditions?: WhereCondition | WhereCondition[]) => {
   const docs = await getDocument(collectionName, conditions);
   if(docs === null) {
     return null;
   }
   const documentId = docs.id;
-  return { documentId, ...docs.data() }
+  return { documentId, ...docs.data() } as T
 }
 
 export const isExistDoc = async (
