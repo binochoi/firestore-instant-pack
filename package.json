@@ -5,6 +5,9 @@
   "main": "dist/main.js",
   "license": "MIT",
   "types": "src/main.ts",
+  "repository": {
+    "url": "https://github.com/binochoi/firestore-instant-pack"
+  },
   "dependencies": {
     "@google-cloud/firestore": "^6.4.0",
     "nodemon": "^2.0.15",
