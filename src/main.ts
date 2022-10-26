@@ -12,7 +12,7 @@ type WhereFilterOperator =
   | 'not-in'
   | 'array-contains-any';
 type WhereCondition = [string, WhereFilterOperator, string];
-type Object = {[K: string]: any};
+type GenericObject = {[K: string]: any};
 const transformSingularWhereConditionToPlural = (conditions: WhereCondition | WhereCondition[]): WhereCondition[] => {
   if(typeof conditions[0] === 'string') {
     return [conditions] as WhereCondition[];
@@ -27,7 +27,7 @@ export const config = (settings: ConstructorParameters<typeof Firestore>[0]) => 
 };
 
   /** firestore cannot store undefined value */
-const modifyUndefToNullOfProperties = (_obj: Object) => {
+const modifyUndefToNullOfProperties = (_obj: GenericObject) => {
   const obj = {..._obj};
   for (const propKey in obj) {
     if (obj[propKey] == undefined) {
@@ -59,7 +59,7 @@ export const getPage = async <T>(
   }
   const documents = await query.get();
 
-  const returnArray: Object = [];
+  const returnArray: GenericObject = [];
   documents.forEach((doc) =>
     returnArray.push({
       documentId: doc.id,
@@ -74,7 +74,7 @@ export const getSpecifics = async <T>(collectionName: string, _docs: string[] | 
   const likeListPageLimit = 25;
   const collection = store.collection(collectionName);
 
-  const returnArray: Object = [];
+  const returnArray: GenericObject = [];
   const limit =
     docs.length > likeListPageLimit ? likeListPageLimit : docs.length;
   for (let i = 0; i < limit; i++) {
@@ -126,7 +126,7 @@ export const isExistDoc = async (
   return docs.exists;
 }
 
-export const insertOne = async (collection: string, obj: Object): Promise<string> => {
+export const insertOne = async (collection: string, obj: GenericObject): Promise<string> => {
   const batch = store.batch();
   const doc = modifyUndefToNullOfProperties(obj);
   const req = await store.collection(collection).add(doc);
@@ -135,7 +135,7 @@ export const insertOne = async (collection: string, obj: Object): Promise<string
   return documentId;
 }
 
-export const setOne = async (collection: string, docId: string, obj: Object) => {
+export const setOne = async (collection: string, docId: string, obj: GenericObject) => {
   return await store.collection(collection).doc(docId).set(modifyUndefToNullOfProperties(obj));
 }
 
