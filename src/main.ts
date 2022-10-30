@@ -44,10 +44,11 @@ export const getPage = async <T>(
     pageIndex: number;
     count?: number;
     where?: [string, WhereFilterOperator, string | number];
-    orderBy?: 'asc' | 'desc';
+    orderBy?: [field: string, direction: 'asc' | 'desc'];
   },
 ) => {
   if (!options.count) options.count = defaultPageCount;
+  if(!options.orderBy) options.orderBy = ['at_created', 'desc'];
   const { pageIndex, count } = options;
   const offset = (pageIndex - 1) * count;
   const collection = store.collection(collectionName);
@@ -55,7 +56,7 @@ export const getPage = async <T>(
   if (options.where) {
     query = query.where(...options.where);
   } else {
-    query = query.orderBy('at_created', options.orderBy || 'desc');
+    query = query.orderBy(...options.orderBy);
   }
   const documents = await query.get();
 
