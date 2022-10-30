@@ -55,7 +55,8 @@ export const getPage = async <T>(
   let query = collection.offset(offset).limit(count);
   if (options.where) {
     query = query.where(...options.where);
-  } else {
+  }
+  if(options.orderBy) {
     query = query.orderBy(...options.orderBy);
   }
   const documents = await query.get();
