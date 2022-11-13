@@ -48,7 +48,6 @@ export const getPage = async <T>(
   },
 ) => {
   if (!options.count) options.count = defaultPageCount;
-  if(!options.orderBy) options.orderBy = ['at_created', 'desc'];
   const { pageIndex, count } = options;
   const offset = (pageIndex - 1) * count;
   const collection = store.collection(collectionName);
