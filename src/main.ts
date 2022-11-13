@@ -166,7 +166,7 @@ export const move = async ({
 }
 /**
  * delete one document
- * - warn) deletion couldn't prevent duplicated deletion tansaction.
+ * - warn) deletion couldn't prevent duplicated deletion transaction.
  * in other words, deleted document can be deleted again. every response would be same.
  */
 export const removeOne = async (collectionName: string, documentId: string) => {
