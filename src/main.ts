@@ -42,6 +42,7 @@ export const getPage = async <T>(
   collectionName: string,
   options: {
     pageIndex: number;
+    /** default value is 25 */
     count?: number;
     where?: [string, WhereFilterOperator, string | number];
     orderBy?: [field: string, direction: 'asc' | 'desc'];
