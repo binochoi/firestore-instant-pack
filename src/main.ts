@@ -164,6 +164,11 @@ export const move = async ({
   store.collection(originCollectionName).doc(document.id).delete();
   await batch.commit();
 }
+/**
+ * delete one document
+ * - warn) deletion couldn't prevent duplicated deletion tansaction.
+ * in other words, deleted document can delete again. every response would be same.
+ */
 export const removeOne = async (collectionName: string, documentId: string) => {
   const collection = store.collection(collectionName);
   const document = collection.doc(documentId);
