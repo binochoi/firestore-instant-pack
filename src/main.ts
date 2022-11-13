@@ -38,7 +38,7 @@ const modifyUndefToNullOfProperties = (_obj: GenericObject) => {
 }
 
 const defaultPageCount = 25;
-export const getPage = async <T>(
+export const getPage = async <T extends Array<{ [key: string]: any }>>(
   collectionName: string,
   options: {
     pageIndex: number;
@@ -68,7 +68,7 @@ export const getPage = async <T>(
       ...doc.data(),
     }),
   );
-  return returnArray as T;
+  return returnArray as (T[0] & { documentId: string })[];
 }
 /** select just specific documents */
 export const getSpecifics = async <T>(collectionName: string, _docs: string[] | string = []) => {
